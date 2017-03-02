@@ -1,0 +1,38 @@
+buildscript {
+    ext.kotlinVersion = '1.1.0'
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+ext {
+    jacksonVersion = '2.7.3'
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+mainClassName = "bb2gh.MainKt"
+
+assemble.dependsOn shadowJar
+
+repositories {
+     jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile 'org.apache.httpcomponents:httpclient:4.5.2'
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
+    testCompile 'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
+}

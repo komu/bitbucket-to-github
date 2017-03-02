@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="bitbucket-to-github_main" target="1.8" />
+      <module name="bitbucket-to-github_test" target="1.8" />
+      <module name="check-this-out_main" target="1.8" />
+      <module name="check-this-out_test" target="1.8" />
+      <module name="evident-checkout_main" target="1.8" />
+      <module name="evident-checkout_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
