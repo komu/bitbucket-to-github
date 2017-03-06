@@ -18,10 +18,16 @@ class Importer(val bitbucketOwner: String,
     }
 
     fun importBitbucketRepositoryToGithub(repo: RepositoryInfo) {
+        val target = GitHubRepository(githubOwner, repo.name.toLowerCase().replace(' ', '-'))
+
+        if (github.repositoryExists(target)) {
+            println("skip ${repo.name} (already exists)")
+            return
+        }
+
         println("import ${repo.name}")
 
         val cloneUrl = repo.httpsCloneUrl ?: error("no https clone url for repo ${repo.name}")
-        val target = GitHubRepository(githubOwner, repo.name.toLowerCase().replace(' ', '-'))
 
         println("  - creating empty repository $target")
         github.createRepository(target, description = repo.description, private = repo.isPrivate)

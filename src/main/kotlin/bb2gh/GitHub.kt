@@ -7,6 +7,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.apache.http.HttpHost
 import org.apache.http.auth.AuthScope
 import org.apache.http.auth.UsernamePasswordCredentials
+import org.apache.http.client.methods.HttpHead
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.client.methods.HttpPut
 import org.apache.http.client.protocol.HttpClientContext
@@ -38,6 +39,18 @@ class GitHubConnector(val credentials: Credentials) {
                     return objectMapper.readEntity<GitHubImportResponse>(response.entity)
                 else
                     error("import failed: ${response.statusLine}: ${response.readBodyAsText()}")
+            }
+        }
+    }
+
+    fun repositoryExists(target: GitHubRepository): Boolean {
+        withAuthenticatedClient { client, httpContext ->
+            val request = HttpHead("https://api.github.com/repos/${target.owner}/${target.name}").apply {
+                addHeader("Accept", "application/vnd.github.v3+json")
+            }
+
+            client.execute(request, httpContext).use { response ->
+                return response.statusLine.statusCode == 200
             }
         }
     }
